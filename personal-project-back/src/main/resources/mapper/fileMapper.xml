@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.main.personalprojectback.dao.FileDao">
+
+    <select id="testTest" resultType="java.lang.String">
+        select user_password from user_tbl where user_id = 1
+    </select>
+</mapper>
