@@ -4,10 +4,10 @@ import com.main.personalprojectback.service.FileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RequestMapping("/file")
 @RestController
@@ -19,5 +19,14 @@ public class FileController {
     public ResponseEntity<?> testTest (){
         String result = service.testTest();
         return ResponseEntity.ok(result);
+    }
+    @PostMapping("inspect")
+    public ResponseEntity<?> inspect(@RequestParam MultipartFile file) throws IOException {
+        String fileType = file.getContentType();
+        if(file.isEmpty() || fileType==null){
+            return ResponseEntity.badRequest().body("파일의 형식이 확인되지 않습니다.");
+        }
+        Object result = service.inspect(file,fileType);
+        return ResponseEntity.ok(null);
     }
 }

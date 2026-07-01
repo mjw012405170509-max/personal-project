@@ -40,6 +40,34 @@ dependencies {
 
     //s3 upload/delete library
     implementation 'software.amazon.awssdk:s3:2.25.0'
+    //pdf->img변환용 라이브러리
+    implementation 'org.apache.pdfbox:pdfbox:3.0.5'
+
+/**
+ * OpenCV 네이티브 라이브러리 초기화
+ *
+ * OpenCV는 Java로 작성된 라이브러리가 아니라 C/C++로 구현된
+ * 네이티브 라이브러리(DLL, Linux는 SO)이다.
+ *
+ * Java는 이러한 네이티브 라이브러리를 직접 사용할 수 없기 때문에,
+ * JVM에 내장된 JNI(Java Native Interface)를 통해 C/C++ 함수와 통신한다.
+ *
+ * 원래는 개발자가 OpenCV DLL을 직접 설치하고,
+ * System.loadLibrary()를 이용하여 JVM에 로드하는 작업을 수행해야 한다.
+ * (운영체제가 DLL을 찾을 수 있도록 환경 변수(PATH) 설정도 필요하다.)
+ *
+ * 본 프로젝트에서는 OpenPnP를 사용하여 이러한 복잡한 초기화 과정을 자동화하였다.
+ * OpenPnP는 OpenCV DLL을 준비하고 JVM에 로드한 뒤,
+ * JNI가 OpenCV와 통신할 수 있도록 필요한 연결 작업을 모두 수행한다.
+ *
+ * 쉽게 말하면,
+ *  - JNI : Java와 C/C++를 연결하는 '통역사'
+ *  - OpenPnP : 통역이 가능하도록 모든 사전 준비를 담당하는 비서('Wrapper')
+ *
+ * 따라서 애플리케이션 시작 시 loadShared()를 한 번만 호출하면,
+ * 이후부터는 Java 코드에서 OpenCV API를 별도의 환경설정 없이 사용할 수 있다.
+ */
+    implementation 'org.openpnp:opencv:4.9.0-0'
 }
 
 tasks.named('test') {

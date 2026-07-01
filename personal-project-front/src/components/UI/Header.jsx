@@ -1,8 +1,12 @@
+import Swal from "sweetalert2";
 import useAuthStore from "../../utils/useAuthStore";
 import styles from "./Header.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { loginStatus } = useAuthStore();
+  const { logout } = useAuthStore();
+  const navigate = useNavigate();
   return (
     loginStatus && (
       <>
